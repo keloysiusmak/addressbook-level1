@@ -87,10 +87,11 @@ public class AddressBook {
     // These are the prefix strings to define the data type of a command parameter
     private static final String PERSON_DATA_PREFIX_PHONE = "p/";
     private static final String PERSON_DATA_PREFIX_EMAIL = "e/";
+    private static final String PERSON_DATA_PREFIX_AGE = "a/";
 
     private static final String PERSON_STRING_REPRESENTATION = "%1$s " // name
             + PERSON_DATA_PREFIX_PHONE + "%2$s " // phone
-            + PERSON_DATA_PREFIX_EMAIL + "%3$s" // email
+            + PERSON_DATA_PREFIX_EMAIL + "%3$s " // email
             + PERSON_DATA_PREFIX_AGE + "%4$s"; // email
     private static final String COMMAND_ADD_WORD = "add";
     private static final String COMMAND_ADD_DESC = "Adds a person to the address book.";
@@ -913,7 +914,8 @@ public class AddressBook {
 //        person[PERSON_DATA_INDEX_EMAIL] = email;
 //        return person;
 //    }
-    private static HashMap<PersonProperty, String> makePersonFromData(String name, String phone, String email) {
+    private static HashMap<PersonProperty, String> makePersonFromData(String name, String phone, String email,
+                                                                      String age) {
         HashMap<PersonProperty, String> person = new HashMap<>();
         person.put(PersonProperty.NAME, name);
         person.put(PersonProperty.PHONE, phone);
@@ -974,6 +976,7 @@ public class AddressBook {
                 extractAgeFromPersonString(encoded)
         );
         // check that the constructed person is valid
+
         return isPersonDataValid(decodedPerson) ? Optional.of(decodedPerson) : Optional.empty();
     }
 
@@ -1024,7 +1027,7 @@ public class AddressBook {
         final int indexOfEmailPrefix = encoded.indexOf(PERSON_DATA_PREFIX_EMAIL);
         final int indexOfAgePrefix = encoded.indexOf(PERSON_DATA_PREFIX_AGE);
         // name is leading substring up to first data prefix symbol
-        int indexOfFirstPrefix = Math.min(indexOfEmailPrefix, indexOfPhonePrefix, indexOfAgePrefix);
+        int indexOfFirstPrefix = Math.min(Math.min(indexOfEmailPrefix, indexOfPhonePrefix),indexOfAgePrefix);
         return encoded.substring(0, indexOfFirstPrefix).trim();
     }
 
@@ -1117,7 +1120,7 @@ public class AddressBook {
      * @param encoded person string representation
      * @return age argument WITHOUT prefix
      */
-    private static String extractEmailFromPersonString(String encoded) {
+    private static String extractAgeFromPersonString(String encoded) {
         final int indexOfPhonePrefix = encoded.indexOf(PERSON_DATA_PREFIX_PHONE);
         final int indexOfEmailPrefix = encoded.indexOf(PERSON_DATA_PREFIX_EMAIL);
         final int indexOfAgePrefix = encoded.indexOf(PERSON_DATA_PREFIX_AGE);
@@ -1165,7 +1168,7 @@ public class AddressBook {
         return isPersonNameValid(person.get(PersonProperty.NAME))
                 && isPersonPhoneValid(person.get(PersonProperty.PHONE))
                 && isPersonEmailValid(person.get(PersonProperty.EMAIL))
-                && isPersonEmailValid(person.get(PersonProperty.AGE));
+                && isPersonAgeValid(person.get(PersonProperty.AGE));
     }
 
     /*
