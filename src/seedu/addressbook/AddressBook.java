@@ -3,7 +3,7 @@ package seedu.addressbook;
 /*
  * NOTE : =============================================================
  * This class is written in a procedural fashion (i.e. not Object-Oriented)
- * Yes, it is possible to write non-OO code using an OO language.
+ * Yes, it is possible to write non-OO code using an OO language indeed.
  * ====================================================================
  */
 
@@ -97,7 +97,7 @@ public class AddressBook {
     private static final String COMMAND_ADD_DESC = "Adds a person to the address book.";
     private static final String COMMAND_ADD_PARAMETERS = "NAME "
             + PERSON_DATA_PREFIX_PHONE + "PHONE_NUMBER "
-            + PERSON_DATA_PREFIX_EMAIL + "EMAIL "
+            + PERSON_DATA_PREFIX_EMAIL + "EMAIL"
             + PERSON_DATA_PREFIX_AGE + "AGE";
     private static final String COMMAND_ADD_EXAMPLE = COMMAND_ADD_WORD + " John Doe p/98765432 e/johnd@gmail.com a/18";
 
